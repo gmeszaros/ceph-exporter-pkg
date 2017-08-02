@@ -1,0 +1,9 @@
+** Creation procedure - brief
+$ PKG=ceph-exporter_0.1_all.deb
+$ mkdir unp/ && cp $PKG unp/ && cd unp/ && ar x $PKG && rm $PKG
+$ mkdir control data
+$ tar xzf control.tar.gz -C control/; tar xzf data.tar.gz -C data/
+$ fpm -s dir -t deb -C ./data -n ceph-exporter -v 0.2 -a all --category network -d "librados2 > 10.1.2-0ubuntu1" -m "Gabor Meszaros " --description $'Ceph_Exporter\nPrometheus exporter that scrapes meta information about a ceph cluster.' --vendor digitalocean --url "https://github.com/digitalocean/ceph_exporter" --post-install control/postinst --post-uninstall control/postrm --pre-uninstall control/prerm -p ../
+Debian packaging tools generally labels all files in /etc as config files, as mandated by policy, so fpm defaults to this behavior for deb packages. You can disable this default behavior with --deb-no-default-config-files flag {:level=>:warn}
+Created package {:path=>"../ceph-exporter_0.2_all.deb"}
+$ cd ..; rm -rf unp
